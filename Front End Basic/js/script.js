@@ -19,6 +19,7 @@ var insertValid =$("#fieldList").kendoValidator({
 
 $(function(){
     loadBookData();
+    bookDataFromLocalStorage.sort((firstBook, secondBook) => firstBook.BookId - secondBook.BookId);
     var data = [
         {text:"資料庫",value:"database"},
         {text:"網際網路",value:"internet"},
@@ -160,11 +161,12 @@ $(function() {
         var boughtDate = $("#bought_datepicker").val();
         var bookPublisher = $("#book_publisher").val()
         // Kendo validator
-        
+        var maxID =Math.max.apply(Math,bookDataFromLocalStorage.map(function(data){return data.BookId;}))
         if(insertValid.validate()){
 
             var detail = {
-                "BookId":bookDataFromLocalStorage[bookDataFromLocalStorage.length - 1].BookId + 1,
+                // "BookId":bookDataFromLocalStorage[bookDataFromLocalStorage.length - 1].BookId + 1,
+                "BookId":maxID + 1,
                 "BookCategory":bookCategory,
                 "BookName":bookName,
                 "BookAuthor":bookAuthor,
@@ -246,8 +248,6 @@ function deleteBook(event){
         //刪除時會出現問題所以加上去的
         // TODO: 比對
         grid.dataSource.removeRow(beDeleted)
-
-        // TODO: 頁數
 
     }
     
