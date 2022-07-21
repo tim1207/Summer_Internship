@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <script src="math.js"></script>
+    <input id="num1" placeholder="第一個數字"><br>
+    <input id="num2" placeholder="第二個數字"><br>
+    <button id="add">加</button>
+    <button id="sub">減</button>
+    <button id="mul">乘</button>
+    <button id="div">除</button>
+    <script>
+        $(document).ready(function () {
+            var num1 = $("#num1");
+            var num2 = $("#num2");
+            
+            $("#add").on("click", function() {
+                alert(floatAdd(num1.val(), num2.val()));
+            });
+            $("#sub").on("click", function() {
+                alert(floatSub(num1.val(), num2.val()));
+            });
+            $("#mul").on("click", function() {
+                alert(floatMul(num1.val(), num2.val()));
+            });
+            $("#div").on("click", function() {
+                alert(floatDiv(num1.val(), num2.val()));
+            });
+        });
+    </script>
+</body>
+</html>

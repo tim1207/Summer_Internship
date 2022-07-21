@@ -1,0 +1,20 @@
+﻿<h1>書籍不存在，5秒後回到首頁</h1>
+<h3 id="timeBox"></h3>
+
+<script type="text/javascript">// 設定秒數
+    var count = 5;
+    function countDown() {
+        // 將秒數寫在指定元素中
+        document.getElementById("timeBox").innerHTML = count;
+        // 每次執行就減1
+        count -= 1;
+        // 當 count = 0 時跳轉頁面
+        if (count == 0) {
+            location.href = "/Books/Index/";
+        }
+        // 設定每秒執行1次
+        setTimeout("countDown()", 1000);
+    }
+    // 執行 countDown
+    countDown();
+</script>

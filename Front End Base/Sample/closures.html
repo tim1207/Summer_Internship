@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <script>
+        var num1 = 2;
+        function myFunction1() {
+            return num1 * num1;
+        }
+        console.log(myFunction1());
+        
+        function myFunction2() {
+            var num2 = 3;
+            return num2 * num2 + num1;
+        }
+        console.log(myFunction2());
+
+        function myFunction3() {
+            var num2 = 4;
+
+            function add() {
+                num2++;
+                return num2;
+            }
+            return add();
+        }
+        console.log(myFunction3());
+        console.log(add());
+    </script>
+</body>
+</html>

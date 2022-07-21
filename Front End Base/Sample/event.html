@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <button onclick="sayHi()">按我</button>
+    <br>
+    顯示文字：<input type="text" oninput="showInputValue(this)">
+    <script>
+        function sayHi() {
+            alert("hi");
+        }
+        function showInputValue(me) {
+            console.log(me.value);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>姓名：<input type="text" id="name"></div>
+    <div>成績：<input type="number" id="socre"></div>
+    <button id="add">新增</button>
+    <h3>所有成績：</h3>
+    <div id="result"></div>
+    <script>
+        $(document).ready(function () {
+            $("#add").on("click", function () {
+                var tempString = "<div><span>姓名：{0}</span>；<span {2}>成績：{1}</span></div>";
+                tempString = tempString.replace("{0}", $("#name").val());
+                tempString = tempString.replace("{1}", $("#socre").val());
+
+                // 低於 60 分顯示紅字
+                if ($("#socre").val() < 60) {
+                    tempString = tempString.replace("{2}", "style='color: red'");
+                }
+                $("#result").append(tempString);
+
+                // reset
+                $("#name").val("");
+                $("#socre").val("");
+            });
+        });        
+    </script>
+</body>
+</html>

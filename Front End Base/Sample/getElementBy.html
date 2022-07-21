@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input type="text" id="myInput">
+    <p>這是 p</p>
+    <p>這是 p</p>
+    <script>
+        var myInput = document.getElementById("myInput");
+        myInput.value = "HI";
+
+        var myP = document.getElementsByTagName("p");
+        myP[0].innerText = "那是 p";
+        myP[1].innerText = "那是 p";
+    </script>
+</body>
+</html>

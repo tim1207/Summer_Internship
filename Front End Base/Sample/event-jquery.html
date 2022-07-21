@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" id="myInput"><br><br>
+    <button id="hi">Hi</button>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("input", function() {
+                console.log($("#myInput").val());
+            });
+            $("#hi").on("click", function() {
+                console.log("Hi");
+            });
+        });
+    </script>
+</body>
+</html>

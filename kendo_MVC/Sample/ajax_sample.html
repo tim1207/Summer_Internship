@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <h1>查詢當天空氣不好的地方</h1>
+
+    <div id="result"></div>
+
+    <button id="myBtn">查詢</button>
+
+    <script>
+        $("#myBtn").click(function () {
+            $.ajax({
+                type: "GET",
+                url: "https://data.epa.gov.tw/api/v1/aqx_p_432?limit=1000&api_key=9be7b239-557b-4c10-9775-78cadfc555e9&sort=ImportDate%20desc&format=json",
+                dataType: "json",
+                success: function (response) {
+                    // console.log(response.records)
+                    var allData = response.records;
+                    allData = allData.filter(function (data) { return data.AQI > 60; });
+                    for (var i = 0; i < allData.length; i++) {
+                        var resultStr = "地區: " + allData[i].SiteName + "，狀態描述: " + allData[i].Status + "，AQI: " + allData[i].AQI;
+
+                        console.log(resultStr);
+
+                        $("#result").append(resultStr + "<br>");
+                    }
+                }, error: function (error) {
+                    alert("系統發生錯誤");
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
