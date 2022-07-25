@@ -3,7 +3,6 @@ function getDropDownList(element, url) {
     $(element).kendoDropDownList({
         dataTextField: "Text",
         dataValueField: "Value",
-        index: 0,
         dataSource: {
             transport: {
                 read: {
@@ -17,22 +16,9 @@ function getDropDownList(element, url) {
 }
 
 
-
-
 /**kendo 格式 */
 function kendoDefaultSetting() {
 
-    $("#BookBoughtDate").kendoDatePicker({
-        format: "yyyy/MM/dd",
-        dateInput: true,
-        max: Date(),
-        value: new Date().toISOString().split('T')[0]
-    });
-
-    $("#BookAmount").kendoNumericTextBox({
-        format: "##,#",
-        min: 0
-    });
 
     $("#InsertBookAmount").kendoNumericTextBox({
         format: "##,#",
@@ -43,7 +29,7 @@ function kendoDefaultSetting() {
         format: "yyyy/MM/dd",
         dateInput: true,
         max: Date(),
-        value: new Date().toISOString().split('T')[0]
+        value: kendo.toString(new Date(), "yyyy/MM/dd")
     });
 
 
@@ -56,10 +42,8 @@ function kendoDefaultSetting() {
         format: "yyyy/MM/dd",
         dateInput: true,
         max: Date(),
-        value: new Date().toISOString().split('T')[0]
+        value: kendo.toString(new Date(), "yyyy/MM/dd")
     });
-
-
 
 }
 
@@ -77,37 +61,39 @@ var validatorOption = {
     },
     rules: {
         cannotBeBlank: function (input) {
-            if (input.is("[role!='spinbutton']") ) {
+            if (input.is("[role!='spinbutton']")) {
                 return $.trim(input.val()) != "";
             }
             return true;
         },
+
+        //TODO :# 
         BookNameValid: function (input) {
-            if (input.is("[id='InsertBookName']") || input.is("[id='UpdateBookName']")) {
+            if (input.is("#InsertBookName") || input.is("#UpdateBookName")) {
                 return input.val().length <= 400;
             }
             return true;
         },
         BookAuthorValid: function (input) {
-            if (input.is("[id='InsertBookAuthor']") || input.is("[id='UpdateBookAuthor']")) {
+            if (input.is("#InsertBookAuthor") || input.is("#UpdateBookAuthor")) {
                 return input.val().length <= 60;
             }
             return true;
         },
         BookPublisherValid: function (input) {
-            if (input.is("[id='InsertBookPublisher']") || input.is("[id='UpdateBookPublisher']")) {
+            if (input.is("#InsertBookPublisher") || input.is("#UpdateBookPublisher")) {
                 return input.val().length <= 40;
             }
             return true;
         },
         BookNoteValid: function (input) {
-            if (input.is("[id='InsertBookNote']") || input.is("[id='UpdateBookNote']")) {
+            if (input.is("#InsertBookNote") || input.is("#UpdateBookNote")) {
                 return input.val().length <= 1200;
             }
             return true;
         },
         BookBoughtDateValid: function (input) {
-            if (input.is("[id='InsertBookBoughtDate']") || input.is("[id='UpdateBookBoughtDate']")) {
+            if (input.is("#InsertBookBoughtDate") || input.is("#UpdateBookBoughtDate")) {
                 let date = kendo.parseDate(input.val(), "yyyy/MM/dd");
                 if (date == null || date > new Date()) {
                     return false
@@ -115,13 +101,39 @@ var validatorOption = {
             }
             return true;
         },
-
     }
 };
 
+/**
+ * Book Note auto grow
+ * @param {any} element
+ */
 function auto_grow(element) {
-    element.style.height = "5px";
-    element.style.height = (element.scrollHeight) + "px";
+
+    let maxheight = 350;
+    $(element).css("height", "auto");
+
+    if ($(element).prop("scrollHeight") < maxheight) {
+        $(element).attr("style",
+            "height:" + $(element).prop("scrollHeight") + "px"
+        )
+    }
+    else {
+        $(element).attr("style",
+            "height:" + maxheight + "px"
+        )
+    }
+
+    $(element).on("input", function () {
+        $(element).css("height", "auto");
+        if ($(element).prop("scrollHeight") < maxheight) {
+            $(element).css("height", $(element).prop("scrollHeight") + "px");
+        }
+        else {
+            $(element).css("height", maxheight + "px");
+        }
+    });
+
 }
 
 
@@ -135,29 +147,27 @@ function OpenUpdateWindow(e) {
     getDropDownList("#UpdateBookClassId", "GetBookClassListData");
     getDropDownList("#UpdateKeeperId", "GetBookKeeperListData");
     getDropDownList("#UpdateBookStatusCode", "GetBookStatusListData");
-
     $("#UpdateWindow").data("kendoWindow").center().open();
-    
+
     $.ajax({
         type: "POST",
         url: "/Book/BookDetailByID",
         data: "bookId=" + row.BookID,
         dataType: "json",
-        success: function (response) {            
+        success: function (response) {
             $("#UpdateBookName").val(response.BookName);
             $("#UpdateBookAuthor").val(response.BookAuthor);
             $("#UpdateBookPublisher").val(response.BookPublisher);
             $("#UpdateBookNote").val(response.BookNote);
+            auto_grow("#UpdateBookNote");
             $("#UpdateBookBoughtDate").val(response.BookBoughtDate);
             $("#UpdateBookClassId").data("kendoDropDownList").value(response.BookClassID);
-            $("#UpdateBookAmount").data("kendoNumericTextBox").value(response["BookAmount"])
+            $("#UpdateBookAmount").data("kendoNumericTextBox").value(response.BookAmount);
             $("#UpdateBookStatusCode").data("kendoDropDownList").value(response.BookStatus);
             $("#UpdateKeeperId").data("kendoDropDownList").value(response.KeeperId);
             statusChange();
         }
     });
-
-
 
     //畫面與資料載入完成後初始化關聯
     statusChange();
@@ -171,7 +181,7 @@ function OpenUpdateWindow(e) {
 
     $("#Save").on("click", function (e) {
 
-        if (confirm("確定修改書籍?") & validatorUpdate.validate()) {
+        if (validatorUpdate.validate() && confirm("確定修改書籍?") ) {
             $.ajax({
                 type: "POST",
                 url: "/Book/UpdateBook",
@@ -181,7 +191,7 @@ function OpenUpdateWindow(e) {
                     BookAuthor: $("#UpdateBookAuthor").val(),
                     BookPublisher: $("#UpdateBookPublisher").val(),
                     BookNote: $("#UpdateBookNote").val(),
-                    BookBoughtDate: $("#UpdateBookBoughtDate").val(),
+                    BookBoughtDate: $("#UpdateBookBoughtDate").data("kendoDatePicker").value(),
                     BookClassId: $("#UpdateBookClassId").data("kendoDropDownList").value(),
                     BookAmount: $("#UpdateBookAmount").data("kendoNumericTextBox").value(),
                     BookStatus: $("#UpdateBookStatusCode").data("kendoDropDownList").value(),
@@ -194,6 +204,14 @@ function OpenUpdateWindow(e) {
                     alert("修改成功");
                 }, error: function (error) {
                     alert("系統發生錯誤");
+                }
+                ,
+                beforeSend: function () {
+                    kendo.ui.progress($("#UpdateWindow"), true);
+                },
+                complete: function () {
+                    kendo.ui.progress($("#UpdateWindow"), false);
+
                 }
             });
         }
@@ -219,7 +237,6 @@ function statusChange() {
     //已借出
     else if (status === "B" || status === "C") {
         $("#UpdateKeeperId").data("kendoDropDownList").enable(true);
-
     }
 }
 
@@ -227,13 +244,12 @@ function statusChange() {
  * 跳到借閱紀錄
  * @param {any} e
  */
-function JumpRecord(e) {
+function OpenRecordWindow(e) {
     e.preventDefault();
     var grid = $("#book_grid").data("kendoGrid");
     var row = grid.dataItem(event.target.closest("tr"));
     var ID = row.BookID;
     $("#lendRecordWindow").data("kendoWindow").center().open();
-
 
     //內部grid
     $("#lend_grid").kendoGrid({
@@ -269,9 +285,10 @@ function JumpRecord(e) {
  * 刪除書本
  * @param {any} e
  */
-function DeleteBook(e,bookID="") {
-    var Check = confirm('Make sure this record is deleted or not?');
-    if (Check == true) {
+function DeleteBook(e, bookID = "") {
+    // ctrl r r
+    var check = confirm('Make sure this record is deleted or not?');
+    if (check) {
         if (bookID == "") {
             e.preventDefault();
             var grid = $("#book_grid").data("kendoGrid");
@@ -282,22 +299,22 @@ function DeleteBook(e,bookID="") {
         else {
             var inputData = bookID;
         }
-
+        kendo.ui.progress($("#book_grid"), true);
+        kendo.ui.progress($("#UpdateWindow"), true);
         $.ajax({
+
             type: "POST",
             url: "/Book/DeleteBook",
             data: "BookID=" + inputData,
             dataType: "json",
             success: function (response) {
-                console.log(response);
-                if (response == true) { 
+
+                if (response == true) {
                     $("#book_name").data("kendoAutoComplete").dataSource.read();
                     alert("The book has been deleted");
                     if (bookID != "") {
                         $("#UpdateWindow").data("kendoWindow").close()
-                    } else {
-                        grid.dataSource.remove(row);
-                    }
+                    } 
                     $("#book_grid").data("kendoGrid").dataSource.read();
                 } else {
                     alert("Book is on loan, please delete them when they are returned");
@@ -305,6 +322,16 @@ function DeleteBook(e,bookID="") {
             },
             error: function (error) {
                 alert("System error");
+            },
+            beforeSend: function () {
+                kendo.ui.progress($("#UpdateWindow"), true);
+                kendo.ui.progress($("#book_grid"), true);
+
+            },
+            complete: function () {
+                kendo.ui.progress($("#UpdateWindow"), false);
+                kendo.ui.progress($("#book_grid"), false);
+
             }
         });
     }
@@ -313,16 +340,15 @@ function DeleteBook(e,bookID="") {
 
 /**
  * Open Detail Window
- * @param {any} e
  */
-function OpenDetailWindow(e) {
+function OpenDetailWindow() {
     var grid = $("#book_grid").data("kendoGrid");
     var row = grid.dataItem(event.target.closest("tr"));
     getDropDownList("#DetailBookClassId", "GetBookClassListData");
     getDropDownList("#DetailKeeperId", "GetBookKeeperListData");
     getDropDownList("#DetailBookStatusCode", "GetBookStatusListData");
 
-
+    $("#DetailWindow").data("kendoWindow").center().open();
 
     $.ajax({
         type: "POST",
@@ -330,20 +356,26 @@ function OpenDetailWindow(e) {
         data: "bookId=" + row.BookID,
         dataType: "json",
         success: function (response) {
-            console.log(response);
-
             $("#DetailBookName").val(response.BookName);
             $("#DetailBookAuthor").val(response.BookAuthor);
             $("#DetailBookPublisher").val(response.BookPublisher);
             $("#DetailBookNote").val(response.BookNote);
+            auto_grow("#DetailBookNote");
             $("#DetailBookBoughtDate").val(response.BookBoughtDate);
             $("#DetailBookClassId").data("kendoDropDownList").value(response.BookClassID);
             $("#DetailBookAmount").val(response.BookAmount);
             $("#DetailBookStatusCode").data("kendoDropDownList").value(response.BookStatus);
             $("#DetailKeeperId").data("kendoDropDownList").value(response.KeeperId);
+        },
+        beforeSend: function () {
+            kendo.ui.progress($("#DetialWindow"), true);
+        },
+        complete: function () {
+            kendo.ui.progress($("#DetialWindow"), false);
         }
     });
-    $("#DetailWindow").data("kendoWindow").center().open();
+
+
 }
 
 

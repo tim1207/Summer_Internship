@@ -1,0 +1,113 @@
+﻿@model BookSystem.Models.Books
+
+@{
+    ViewBag.Title = "BookDetial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BookDetial</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>書本詳細資料</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "req control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookName, new { @class = "form-control" ,disabled = "disabled"})
+            @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookAuthor, htmlAttributes: new { @class = "req control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookAuthor, new { @class = "form-control" ,disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.BookAuthor, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookPublisher, htmlAttributes: new { @class = "req control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookPublisher, new { @class = "form-control" ,disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.BookPublisher, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookNote, htmlAttributes: new { @class = "req control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.BookNote, new { @class = "form-control" ,disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.BookNote, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookBoughtDate, htmlAttributes: new { @class = "req control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookBoughtDate, new { @class = "form-control datepicker" ,disabled = "disabled", @type = "Date" })
+            @Html.ValidationMessageFor(model => model.BookBoughtDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookClassName, htmlAttributes: new { @class = "req control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.BookClassName, (IEnumerable<SelectListItem>)ViewBag.BookClass, new { @class = "form-control" ,disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.BookClassName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BookAmount, new { @type = "number", @min = "0", @class = "form-control" ,disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.BookAmount, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookStatus, htmlAttributes: new { @class = "req control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.BookStatus, (IEnumerable<SelectListItem>)ViewBag.BookStatus, new { @class = "form-control" ,disabled = "disabled" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <label class="req control-label col-md-2" for="KeeperId">借閱人</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.KeeperId, (IEnumerable<SelectListItem>)ViewBag.BookKeeper, new { @class = "form-control" ,disabled = "disabled" })
+        </div>
+    </div>
+
+
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to Search", "Index")
+</div>
+<script>
+    const tx = document.getElementsByTagName("textarea");
+    for (let i = 0; i < tx.length; i++) {
+        tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+        tx[i].addEventListener("input", OnInput, false);
+    }
+
+    function OnInput() {
+        this.style.height = "auto";
+        this.style.height = (this.scrollHeight) + "px";
+    }
+</script>

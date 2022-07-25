@@ -20,17 +20,32 @@ namespace BookSystem.Controllers
         {
             return View();
         }
-        // TODO: mix together
+
+        /// <summary>
+        /// 取類別
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost()]
         public JsonResult GetBookClassListData()
         {
             return this.Json(this.codeService.GetSelectList("ClassName"));
         }
 
+        /// <summary>
+        /// 取使用者
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost()]
         public JsonResult GetBookKeeperListData()
         {
             return this.Json(this.codeService.GetSelectList("Keeper",true));
         }
 
+        /// <summary>
+        /// 取狀態
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost()]
         public JsonResult GetBookStatusListData()
         {
             return this.Json(this.codeService.GetSelectList("Status"));
@@ -40,8 +55,7 @@ namespace BookSystem.Controllers
         [HttpPost()]
         public JsonResult GetSearchResult(Models.BookSearchArg book)
         {
-            List<Models.Book> getBook = bookService.GetBookByCondtioin(book);
-            return Json(getBook);
+            return Json(bookService.GetBookByCondtioin(book));
         }
 
         /// <summary>
@@ -50,11 +64,11 @@ namespace BookSystem.Controllers
         /// <param name="BookID"></param>
         /// <returns></returns>
         [HttpPost()]
-        public JsonResult DeleteBook(int BookID)
+        public JsonResult DeleteBook(int bookID)
         {
             try
             {
-                var num = bookService.DeleteBookById(BookID);
+                var num = bookService.DeleteBookById(bookID);
                 if (num > 0)
                 {
                     return this.Json(true);
@@ -81,8 +95,7 @@ namespace BookSystem.Controllers
         public JsonResult BookLendRecord(int bookId)
         {
 
-            var record = bookService.GetBookLendRecordByBookID(bookId);
-            return Json(record);
+            return Json(bookService.GetBookLendRecordByBookID(bookId));
         }
 
 
@@ -94,8 +107,7 @@ namespace BookSystem.Controllers
         [HttpPost()]
         public JsonResult BookDetailByID(int bookId)
         {
-            var detail = bookService.GetBookByID(bookId);
-            return Json(detail);
+            return Json(bookService.GetBookByID(bookId));
         }
 
         /// <summary>
@@ -145,6 +157,10 @@ namespace BookSystem.Controllers
             }
         }
 
+        /// <summary>
+        /// 取書名
+        /// </summary>
+        /// <returns></returns>
         [HttpPost()]
         public JsonResult GetAllBook()
         {

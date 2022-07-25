@@ -84,7 +84,7 @@ namespace BookSystem.Models
                     Value = ""
                 }
             };
-            if(str1=="" & str2 =="" && str3 == "")
+            if(str1=="" && str2 =="" && str3 == "")
             {
                 foreach (DataRow row in dt.Rows)
                 {

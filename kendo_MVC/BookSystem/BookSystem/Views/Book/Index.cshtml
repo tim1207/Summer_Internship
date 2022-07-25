@@ -3,12 +3,11 @@
         content: '*';
         color: red;
     }
-
-    input.input-width {
-        width: 280px;
+    a:hover {
+        cursor: pointer;
     }
 
-</style>﻿
+</style>
 
 
 
@@ -23,7 +22,6 @@
             <div>
                 <input class="form-control input-width" id="book_name" style="width: 280px;" type="text" />
             </div>
-
 
         </div>
 
@@ -41,7 +39,6 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <label class="control-label col-md-2">借閱狀態</label>
             <div>
@@ -56,6 +53,7 @@
                 <button id="create" class="btn btn-success">新增</button>
             </div>
         </div>
+
     </div>
 
     <div id="book_grid"></div>
@@ -71,11 +69,9 @@
 
         <div class="form-horizontal">
 
-
             <div class="form-group">
                 <label class="req control-label col-md-2">書名</label>
                 <div class="col-md-6">
-
                     <input id="DetailBookName" name="BookName" disabled="disabled" class="form-control" type="text" required />
                 </div>
             </div>
@@ -84,7 +80,6 @@
                 <label class="req control-label col-md-2">作者</label>
                 <div class="col-md-6">
                     <input id="DetailBookAuthor" name="DetailBookAuthor" disabled="disabled" class="form-control" type="text" required />
-
                 </div>
             </div>
 
@@ -112,7 +107,7 @@
             <div class="form-group">
                 <label class="req control-label col-md-2">購書金額</label>
                 <div class="col-md-6">
-                    <input id="DetailBookAmount" name="BookAmount" disabled="disabled" class="form-control"  />
+                    <input id="DetailBookAmount" name="BookAmount" disabled="disabled" class="form-control" />
                 </div>
             </div>
 
@@ -122,8 +117,6 @@
                     <input id="DetailBookClassId" name="BookClassId" disabled="disabled" class="form-control" required />
                 </div>
             </div>
-
-
 
             <div class="form-group">
                 <label class="req control-label col-md-2">借閱狀態</label>
@@ -139,67 +132,72 @@
                 </div>
             </div>
 
-
-
         </div>
 
     </div>
 
     @*Insert window*@
     <div id="InsertWindow">
+
         <div class="uk-container align-center">
             <div class="">
 
-                    <div class=" form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label  col-md-2 xrequired">書名</label>
-                            <div class="col-md-6">
-                                <input class="form-control input-width" id="InsertBookName" name="BookName" type="text" value="" required />
+                <div class=" form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label  col-md-2 xrequired">書名</label>
+                        <div class="col-md-6">
+                            <input class="form-control input-width" id="InsertBookName" name="BookName" type="text" value="" required />
 
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 xrequired">作者</label>
-                            <div class="col-md-6">
-                                <input class="form-control input-width" id="InsertBookAuthor" name="BookAuthor" type="text" value="" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 xrequired">出版商</label>
-                            <div class="col-md-6">
-                                <input class="form-control input-width" id="InsertBookPublisher" name="BookPublisher" type="text" value="" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 xrequired">內容簡介</label>
-                            <div class="col-md-6">
-                                <textarea oninput="auto_grow(this)" class=" form-control" id="InsertBookNote" name="BookNote" type="text" value="" required></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 xrequired">購書日期</label>
-                            <div class="col-md-6">
-                                <input class="form-control input-width" id="InsertBookBoughtDate" name="BookBoughtDate" type="date" value="" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2 xrequired">圖書類別</label>
-                            <div class="col-md-6">
-                                <input class="form-control input-width" id="InsertBookClassId" name="BookClassId" type="text" value="" required />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-2 xrequired">購書金額</label>
-                            <div class="col-md-6">
-                                <input class="form-control input-width" id="InsertBookAmount" name="BookAmount" type="text" value="" required/>
-                            </div>
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="control-label col-md-2 xrequired">作者</label>
+                        <div class="col-md-6">
+                            <input class="form-control input-width" id="InsertBookAuthor" name="BookAuthor" type="text" value="" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 xrequired">出版商</label>
+                        <div class="col-md-6">
+                            <input class="form-control input-width" id="InsertBookPublisher" name="BookPublisher" type="text" value="" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 xrequired">內容簡介</label>
+                        <div class="col-md-6">
+                            <textarea oninput="auto_grow(this)" class=" form-control" id="InsertBookNote" name="BookNote" type="text" value="" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 xrequired">購書日期</label>
+                        <div class="col-md-6">
+                            <input class="form-control input-width" id="InsertBookBoughtDate" name="BookBoughtDate" type="date" value="" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 xrequired">圖書類別</label>
+                        <div class="col-md-6">
+                            <input class="form-control input-width" id="InsertBookClassId" name="BookClassId" type="text" value="" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 xrequired">購書金額</label>
+                        <div class="col-md-6">
+                            <input class="form-control input-width" id="InsertBookAmount" name="BookAmount" type="text" value="" required />
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="form-group">
                     <div class="col-md-offset-10">
-                        <button id="Insert" class="btn btn-success">新增</button>
+                        <button id="insert" class="btn btn-success">新增</button>
                     </div>
                 </div>
 
@@ -209,12 +207,13 @@
 
     @*Upadte Window*@
     <div id="UpdateWindow">
+
         <div class="form-horizontal">
+
             <div class="form-group">
                 <label class="control-label  col-md-2 xrequired" for="BookName">書名</label>
                 <div class="col-md-6">
                     <input class="form-control" data-val="true" data-val-required="此欄位必填" id="UpdateBookName" name="BookName" type="text" required />
-
                 </div>
             </div>
 
@@ -222,7 +221,6 @@
                 <label class="control-label  col-md-2 xrequired" for="BookName">作者</label>
                 <div class="col-md-6">
                     <input class="form-control" data-val="true" data-val-required="此欄位必填" id="UpdateBookAuthor" name="BookAuthor" type="text" required />
-
                 </div>
             </div>
 
@@ -230,7 +228,6 @@
                 <label class="control-label  col-md-2 xrequired" for="BookName">出版商</label>
                 <div class="col-md-6">
                     <input class="form-control" data-val="true" data-val-required="此欄位必填" id="UpdateBookPublisher" name="BookPublisher" type="text" required />
-                    <span class="field-validation-valid text-danger" data-valmsg-for="BookPublisher" data-valmsg-replace="true"></span>
                 </div>
             </div>
 
@@ -238,7 +235,7 @@
             <div class="form-group">
                 <label class="control-label  col-md-2 xrequired">內容簡介</label>
                 <div class="col-md-6">
-                    <textarea  oninput="auto_grow(this)" id="UpdateBookNote" name="BookNote" class=" form-control" type="text" required></textarea>
+                    <textarea oninput="auto_grow(this)" id="UpdateBookNote" name="BookNote" class=" form-control" type="text" required></textarea>
                 </div>
             </div>
 
@@ -253,7 +250,7 @@
             <div class="form-group">
                 <label class="control-label  col-md-2 xrequired">購書金額</label>
                 <div class="col-md-6">
-                    <input id="UpdateBookAmount" name="BookAmount" class="form-control"  required/>
+                    <input id="UpdateBookAmount" name="BookAmount" class="form-control" required />
                 </div>
             </div>
 
@@ -284,11 +281,10 @@
                     <button id="Delete" class="btn btn-danger">刪除</button>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
-
-
 
 
 
@@ -296,11 +292,13 @@
     var validatorInsert = $("#InsertWindow").kendoValidator(validatorOption).data("kendoValidator");
 
     $(document).ready(function () {
-        // get Drop Down List
+
         getDropDownList("#BookClassId", "GetBookClassListData");
         getDropDownList("#KeeperId", "GetBookKeeperListData");
         getDropDownList("#BookStatusCode", "GetBookStatusListData");
         kendoDefaultSetting();
+
+        // AutoComplete
         $("#book_name").kendoAutoComplete({
             placeholder: "Select Book...",
             clearButton: false,
@@ -315,8 +313,8 @@
                     }
                 }
             }
-
         });
+
         $("#book_grid").kendoGrid({
             dataSource: {
                 transport: {
@@ -341,13 +339,13 @@
                 input: true,
                 numeric: false
             },
+            width: 1200,
             columns: [
 
                 { field: "BookClassName", title: "圖書類別", width: "18%" },
                 {
                     field: "BookName", title: "書籍名稱", width: "32%",
-                    //template: "<a style ='color: blue;' href='/Book/BookDetail?value=#=BookID#'>#:BookName#</a>"
-                    template: "<a onclick=\"OpenDetailWindow(this)\" style='color: blue;'>#=BookName#</a>"
+                    template: "<a onclick=\"OpenDetailWindow()\" style='color: blue;'>#=BookName#</a>"
 
                 },
                 { field: "BookBoughtDate", title: "購買日期", width: "20%" },
@@ -355,56 +353,67 @@
                 { field: "UserName", title: "借閱人", width: "15%" },
                 {
                     command: [
-                        { className: "k-fab-success", text: "借閱紀錄", click: JumpRecord },
-                        { className: "k-fab-primary",text: "修改", click: OpenUpdateWindow },
-                        { className: "k-fab-error", text: "刪除", click: DeleteBook }
-                        ],
+                        { className: "btn-success", text: "借閱紀錄", click: OpenRecordWindow },
+                        { className: "btn-primary", text: "修改", click: OpenUpdateWindow },
+                        { className: "btn-danger", text: "刪除", click: DeleteBook }
+                    ],
                     title: " ", width: "40%"
                 }
             ]
-
         });
 
+        /** Search button */
         $("#search").click(function (e) {
             e.preventDefault();
-            
             $("#book_grid").data("kendoGrid").dataSource.read();
-            $("#book_grid").removeAttr("style", "display");
+
         });
 
+        /** create button */
         $("#create").click(function (e) {
+
             validatorInsert.reset();
             $("#InsertWindow").data("kendoWindow").open().center();
             getDropDownList("#InsertBookClassId", "GetBookClassListData");
-
-           
-            $("#Insert").on("click", function (e) {
-                if (confirm("確定新增書籍?") & validatorInsert.validate()) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/Book/InsertBook",
-                        data: {
-                            BookName: $("#InsertBookName").val(),
-                            BookAuthor: $("#InsertBookAuthor").val(),
-                            BookPublisher: $("#InsertBookPublisher").val(),
-                            BookNote: $("#InsertBookNote").val(),
-                            BookBoughtDate: $("#InsertBookBoughtDate").val(),
-                            BookClassID: $("#InsertBookClassId").data("kendoDropDownList").value(),
-                            BookAmount: $("#InsertBookAmount").data("kendoNumericTextBox").value()
-
-                        },
-                        dataType: "json",
-                        success: function (response) {
-                            alert("新增成功");
-                            $("#book_grid").data("kendoGrid").dataSource.read();
-                        }, error: function (error) {
-                            alert("系統發生錯誤");
-                        }
-                    });
-                }
-            });
+            auto_grow("#InsertBookNote");
+            
+            
         });
 
+        /** insert button */
+        $("#insert").on("click", function (e) {
+            //順序顛倒比較好
+            if (validatorInsert.validate() && confirm("確定新增書籍?")  ) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Book/InsertBook",
+                    data: {
+                        BookName: $("#InsertBookName").val(),
+                        BookAuthor: $("#InsertBookAuthor").val(),
+                        BookPublisher: $("#InsertBookPublisher").val(),
+                        BookNote: $("#InsertBookNote").val(),
+                        BookBoughtDate: $("#InsertBookBoughtDate").val(),
+                        BookClassID: $("#InsertBookClassId").data("kendoDropDownList").value(),
+                        BookAmount: $("#InsertBookAmount").data("kendoNumericTextBox").value()
+
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        alert("新增成功");
+                        $("#book_grid").data("kendoGrid").dataSource.read();
+                    },
+                    error: function (error) {
+                        alert("系統發生錯誤");
+                    },
+                    beforeSend: function () {
+                        kendo.ui.progress($("#InsertWindow"), true);
+                    },
+                    complete: function () {
+                        kendo.ui.progress($("#InsertWindow").data("kendoWindow").element, false);
+                    }
+                });
+            }
+        });
 
         ///清除輸入
         $("#clear").click(function () {
@@ -421,11 +430,11 @@
             height: "480px",
             title: "借閱紀錄 ",
             visible: false,
-            modal: true,
-        }).data("kendoWindow")
+            modal: true
+        }).data("kendoWindow");
 
 
-
+        //Detail 的視窗
         $("#DetailWindow").kendoWindow({
             width: "450px",
             modal: true,
@@ -434,9 +443,9 @@
             visible: false,
             pinned: true,
             resizable: false
-        }).data("kendoWindow")
+        }).data("kendoWindow");
 
-
+        //Insert 的視窗
         $("#InsertWindow").kendoWindow({
             width: "450px",
             modal: true,
@@ -450,15 +459,13 @@
                 $("#InsertBookAuthor").val("");
                 $("#InsertBookPublisher").val("");
                 $("#InsertBookNote").val("");
-                $("#InsertBookBoughtDate").val("");
+                $("#InsertBookBoughtDate").data("kendoDatePicker").value(kendo.toString(new Date(), "yyyy/MM/dd"));              
                 $("#InsertBookClassId").data("kendoDropDownList").value("");
                 $("#InsertBookAmount").data("kendoNumericTextBox").value("")
             }
-        }).data("kendoWindow")
+        }).data("kendoWindow");
 
-
-
-
+        // Update 的視窗
         $("#UpdateWindow").kendoWindow({
             width: "450px",
             modal: true,
@@ -468,8 +475,6 @@
             pinned: true,
             resizable: false
         }).data("kendoWindow")
-
-
 
     })
 

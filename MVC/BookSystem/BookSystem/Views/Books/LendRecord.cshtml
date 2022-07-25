@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "LendRecord";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Book Lend Record</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>書本借閱資料</h4>
+    @if (ViewBag.LendResult != null)
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>借閱日期</th>
+                    <th>借閱人員編號</th>
+                    <th>英文姓名</th>
+                    <th>中文姓名</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (List<BookSystem.Models.BookLend>)ViewBag.LendResult)
+                {
+                    <tr id='@item.BookID'>
+                        <td>@item.LendDate</td>
+                        <td>@item.KeeperId</td>
+                        <td>@item.UserEName</td>
+                        <td>@item.UserCName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+}
+
+

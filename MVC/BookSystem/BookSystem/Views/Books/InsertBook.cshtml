@@ -1,0 +1,140 @@
+﻿@model BookSystem.Models.Books
+
+@{
+    ViewBag.Title = "InsertBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Book System</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>新增書本</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.BookName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookAuthor, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.BookAuthor, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BookAuthor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookPublisher, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.BookPublisher, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BookPublisher, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookNote, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.BookNote, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BookNote, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookBoughtDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" id='datetimepicker'>
+                @Html.TextBoxFor(model => model.BookBoughtDate, new { @class = "form-control", @type = "Date", @id = "boughtDate", @Value = DateTime.Now.ToString("yyyy-MM-dd"), @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.BookBoughtDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.BookAmount, new { @type = "number", @min = "0", @class = "form-control", @id = "Currency" })
+                @Html.ValidationMessageFor(model => model.BookAmount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group">
+            <label class="req control-label col-md-2" for="BookClassID">圖書類別</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.BookClassID, (List<SelectListItem>)ViewBag.BookClassNameData, "請選擇", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BookClassID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="button" value="清空" onclick="location.href = '/Books/InsertBook';" class="btn btn-default" />
+
+
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Book to Search", "Index")
+</div>
+
+@if (ViewBag.Message == "success")
+{
+    <script>
+        alert("存檔成功")
+        statusChange();
+    </script>
+
+}
+else if (ViewBag.Message == "fail")
+{
+    <script>
+        alert("存檔失敗")
+        statusChange();
+    </script>
+}
+
+<script>
+    const tx = document.getElementsByTagName("textarea");
+    for (let i = 0; i < tx.length; i++) {
+        tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+        tx[i].addEventListener("input", OnInput, false);
+    }
+
+    function OnInput() {
+        this.style.height = "auto";
+        this.style.height = (this.scrollHeight) + "px";
+    }
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

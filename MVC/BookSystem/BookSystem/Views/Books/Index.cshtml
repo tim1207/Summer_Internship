@@ -1,0 +1,140 @@
+﻿@model BookSystem.Models.BookSearchArg
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Book System</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>查詢書本</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.BookName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.BookName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.KeeperId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.KeeperId, (IEnumerable<SelectListItem>)ViewBag.BookKeeper, new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookClassId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.BookClassId, (List<SelectListItem>)ViewBag.BookClassNameData, "請選擇", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BookClassId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BookStatusCode, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.BookStatusCode, (List<SelectListItem>)ViewBag.BookStatus, "請選擇", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BookStatusCode, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Search" class="btn btn-default" />
+            <input type="button" value="Clean" onclick="location.href = '/Books/Index';" class="btn btn-default" />
+            <input type="button" value="Insert" onclick="location.href = '/Books/InsertBook';" class="btn btn-default" />
+        </div>
+    </div>
+
+    @if (ViewBag.SearchResult != null)
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr id>
+                    <th>圖書類別</th>
+                    <th>書名</th>
+                    <th>購書日期</th>
+                    <th>借閱狀態</th>
+                    <th>借閱人</th>
+                    <td></td>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in (List<BookSystem.Models.Books>)ViewBag.SearchResult)
+                {
+
+                <tr id='@item.BookID'>
+                    <td>@item.BookClassName</td>
+                    <td width="40%"><a href="/Books/BookDetial?value=@item.BookID">@item.BookName</a></td>
+                  
+                    <td>@item.BookBoughtDate</td>
+                    <td id="BookStatus">@item.BookStatus</td>
+                    <td>@item.UserName</td>
+                    <td>
+
+
+                        <input type="button" value="借閱紀錄" onclick="location.href = '/Books/LendRecord?value=@item.BookID';" class="lend_btn btn btn-default" />
+                        <input type="button" value="編輯" onclick="location.href = '/Books/UpdateBook?value=@item.BookID';" class="edit_btn btn btn-default" />
+                        <input type="button" value="刪除" onclick="return confirm('Are you sure?')" class="btnDelete  btn btn-default" />
+
+
+                    </td>
+
+
+                </tr>
+
+                    }
+                </tbody>
+        </table>}
+
+
+
+
+</div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".btnDelete").click(function (e) {
+            e.preventDefault();
+            var tr = $(this).closest('tr')
+            console.log(tr.attr('id'));
+            $.ajax({
+                type: "POST",
+                url: "/Books/DeleteBook",
+                data: "bookId=" + tr.attr('id'),
+                dataType: "json",
+                success: function (response) {
+                    if (response == true) {
+                        $(tr).remove();
+                        alert("圖書已刪除");
+                    } else {
+                        alert("書本借出中，請待歸還後再進行刪除");
+                    }
+                },
+                error: function (error) {
+                    alert("系統發生錯誤");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+
+
+
+<div>
+    @Html.ActionLink("Go to Insert", "InsertBook")
+</div>
